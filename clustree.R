@@ -1,0 +1,52 @@
+library(dplyr)
+library(tidyverse)
+library(Seurat)
+library(patchwork)
+library(MAST)
+library(clustree)
+#library(splatter)
+library(igraph)
+library(ggraph)
+library(viridis)
+
+
+setwd("/Users/sbombin/Desktop/analysis_mm39.comb/")
+seurat.combined <- RunTSNE(seurat.combined, dims = 1:npcs)
+seurat.combined <- FindClusters(seurat.combined, resolution = c(0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.4))
+p1 <- clustree(seurat.combined)
+SaveFigure(p1, "Clustree.Intgrt.Sham-BDL", width = 8, height = 10)
+p2 <- DimPlot(seurat.combined, reduction = "umap", group.by = "group")
+p3 <- DimPlot(seurat.combined, reduction = "umap", label = TRUE, repel = TRUE, group.by = "sample")
+SaveFigure((p2 + p3), "Dimplot.Intgrtn_Sham-BDL", width = 12, height = 8)
+
+pbmc <- RunTSNE(pbmc, dims = 1:npcs)
+pbmc <- FindClusters(pbmc, resolution = c(0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.4))
+cltree <- clustree(pbmc)
+SaveFigure(cltree, "Clustree", width = 8, height = 10)
+p5 <- DimPlot(pbmc, reduction = "umap", group.by = "group")
+p6 <- DimPlot(pbmc, reduction = "umap", label = TRUE, repel = TRUE, group.by = "sample")
+SaveFigure((p5 + p6), "Dimplot", width = 12, height = 8)
+
+clusters.isc <- FindClusters(isc.sct, resolution = c(0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.4))
+cltree.isc <- clustree(clusters.isc)
+SaveFigure(cltree.isc, "Clustree_ISC", width = 6, height = 8)
+
+clusters.ta <- FindClusters(ta.sct, resolution = c(0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.4))
+cltree.ta <- clustree(clusters.ta)
+SaveFigure(cltree.ta, "Clustree_TA", width = 6, height = 8)
+
+clusters.tuft <- FindClusters(tuft.sct, resolution = c(0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.4))
+cltree.tuft <- clustree(clusters.tuft)
+SaveFigure(cltree.tuft, "Clustree_Tuft", width = 6, height = 8)
+
+clusters.goblet <- FindClusters(goblet.sct, resolution = c(0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.4))
+cltree.goblet <- clustree(clusters.goblet)
+SaveFigure(cltree.goblet, "Clustree_Goblet", width = 6, height = 8)
+
+clusters.eec <- FindClusters(eec.sct, resolution = c(0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.4))
+cltree.eec <- clustree(clusters.eec)
+SaveFigure(cltree.eec, "Clustree_EEC", width = 6, height = 8)
+
+clusters.paneth <- FindClusters(paneth.sct, resolution = c(0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.4))
+cltree.paneth <- clustree(clusters.paneth)
+SaveFigure(cltree.paneth, "Clustree_Paneth", width = 6, height = 8)
